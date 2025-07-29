@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fahim Hasan – Digital Marketer</title>
+
+<!-- Font Awesome CDN for icons -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --primary: #00bfa5;
+    --bg: #0f0f0f;
+    --text: #fff;
+    --btn-hover: #009e8e;
+    --card-bg: #1a1a1a;
+    --accent: #25d366;
+  }
+  * {
+    margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    background: #111;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  nav h1 {
+    color: var(--primary);
+    font-size: 1.8rem;
+    flex: 1;
+    user-select: none;
+  }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+  }
+  .hamburger div {
+    width: 25px;
+    height: 3px;
+    background: white;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+  }
+  /* Animate hamburger when active */
+  .hamburger.active div:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .hamburger.active div:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active div:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: flex-end;
+    flex: 2;
+  }
+  nav ul li {
+    display: inline-block;
+  }
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* space between icon and text */
+  }
+  nav ul li a i {
+    font-size: 1.1rem;
+    color: var(--primary);
+    min-width: 20px;
+    text-align: center;
+  }
+  nav ul li a::after {
+    content: "";
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    transition: 0.3s;
+  }
+  nav ul li a.active::after {
+    width: 100%;
+  }
+  nav ul li a:hover::after {
+    width: 100%;
+  }
+  main {
+    flex-grow: 1;
+    max-width: 960px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+    min-height: 60vh;
+  }
+  section {
+    display: none;
+  }
+  section.active {
+    display: block;
+  }
+  /* Home Section */
+  #home .hero {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  #home .hero img.hero-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    border: 3px solid var(--primary);
+    box-shadow: 0 0 10px rgba(0,191,165,0.7);
+  }
+  #home .hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+  }
+  #home .hero p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    color: #ccc;
+    line-height: 1.7;
+  }
+  .btn {
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    padding: 0.9rem 2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    transition: background 0.3s ease;
+    display: inline-block;
+  }
+  .btn:hover {
+    background: var(--btn-hover);
+  }
+  /* About Section */
+  #about p {
+    max-width: 800px;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    color: #ccc;
+  }
+  /* Skills Section */
+  .skill {
+    margin-bottom: 1.5rem;
+  }
+  .skill-name {
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--primary);
+  }
+  .progress-bar-bg {
+    background: #333;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 20px;
+    background: var(--primary);
+    width: 0;
+    border-radius: 20px;
+    transition: width 1.5s ease;
+  }
+  /* Portfolio Section */
+  .project {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    margin-bottom: 1.8rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    transition: transform 0.3s ease;
+  }
+  .project:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0,191,165,0.6);
+  }
+  .project-title {
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin-bottom: 0.7rem;
+    font-weight: 600;
+  }
+  .project-desc {
+    font-size: 1rem;
+    color: #ccc;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  .project-link {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+  .project-link:hover {
+    border-color: var(--primary);
+  }
+  /* Blog Section */
+  .blog-post {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.8rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    transition: transform 0.3s ease;
+  }
+  .blog-post:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0,191,165,0.6);
+  }
+  .post-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: var(--primary);
+  }
+  .post-excerpt {
+    font-size: 1rem;
+    color: #ccc;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  .read-more {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+  .read-more:hover {
+    border-color: var(--primary);
+  }
+  /* Contact Section */
+  form {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,191,165,0.4);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #ccc;
+  }
+  input, textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1.5rem;
+    border: none;
+    border-radius: 6px;
+    background: #333;
+    color: #fff;
+    font-size: 1rem;
+  }
+  button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.9rem 2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background: var(--btn-hover);
+  }
+  /* Footer */
+  footer {
+    background: #111;
+    padding: 2rem;
+    text-align: center;
+    color: #aaa;
+    margin-top: 3rem;
+  }
+  .socials {
+    margin-bottom: 1rem;
+  }
+  .socials a {
+    margin: 0 1rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+  }
+  .socials a:hover {
+    color: #00ffd5;
+  }
+  /* WhatsApp Floating Button */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--accent);
+    color: white;
+    font-size: 28px;
+    padding: 14px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    text-decoration: none;
+    transition: transform 0.3s ease;
+  }
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+  }
+
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex;
+    }
+    nav ul {
+      flex-direction: column;
+      width: 100%;
+      display: none;
+      margin-top: 1rem;
+      gap: 1rem;
+    }
+    nav ul.show {
+      display: flex;
+    }
+    nav ul li {
+      width: 100%;
+    }
+    nav ul li a {
+      display: block;
+      width: 100%;
+      padding: 0.75rem 0;
+    }
+    main {
+      padding: 0 1rem;
+      margin-top: 1rem;
+    }
+    #home .hero h2 {
+      font-size: 2rem;
+    }
+    #home .hero p {
+      font-size: 1rem;
+      max-width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <nav>
+    <h1>Fahim Hasan</h1>
+    <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+      <div></div><div></div><div></div>
+    </div>
+    <ul id="nav-links">
+      <li><a href="#" data-target="home" class="active"><i class="fas fa-home"></i>Home</a></li>
+      <li><a href="#" data-target="about"><i class="fas fa-user"></i>About</a></li>
+      <li><a href="#" data-target="skills"><i class="fas fa-chart-line"></i>Skills</a></li>
+      <li><a href="#" data-target="portfolio"><i class="fas fa-briefcase"></i>Portfolio</a></li>
+      <li><a href="#" data-target="blog"><i class="fas fa-blog"></i>Blog</a></li>
+      <li><a href="#" data-target="contact"><i class="fas fa-envelope"></i>Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <!-- Home Section -->
+  <section id="home" class="active">
+    <div class="hero">
+      <img src="fahim12.jpg" alt="Fahim Hasan" class="hero-img" />
+      <h2>Hello! I’m Fahim Hasan</h2>
+      <p>A professional digital marketer with over 3 years of experience in SEO, Facebook Ads, Google Ads, and content strategy. I help brands grow by building visibility and driving high-quality traffic and conversions online.</p>
+      <a class="btn" href="Fahim_CV.pdf" download>Download CV</a>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>I am a digital marketing specialist with expertise in SEO, Facebook Ads, Google Ads, WordPress, and content strategy. I am passionate about helping businesses grow and succeed online. I have worked with multiple clients to boost their digital presence and increase sales.</p>
+    <p>In addition to marketing, I have experience with blockchain development and various digital tools. I am continuously learning and adapting to new marketing trends.</p>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills">
+    <h2>My Skills</h2>
+    <div class="skill">
+      <div class="skill-name">SEO</div>
+      <div class="progress-bar-bg">
+        <div id="seo" class="progress-bar-fill" style="width: 85%;"></div>
+      </div>
+    </div>
+    <div class="skill">
+      <div class="skill-name">Facebook Ads</div>
+      <div class="progress-bar-bg">
+        <div id="facebookAds" class="progress-bar-fill" style="width: 80%;"></div>
+      </div>
+    </div>
+    <div class="skill">
+      <div class="skill-name">WordPress</div>
+      <div class="progress-bar-bg">
+        <div id="wordpress" class="progress-bar-fill" style="width: 75%;"></div>
+      </div>
+    </div>
+    <div class="skill">
+      <div class="skill-name">Google Ads</div>
+      <div class="progress-bar-bg">
+        <div id="googleAds" class="progress-bar-fill" style="width: 70%;"></div>
+      </div>
+    </div>
+    <div class="skill">
+      <div class="skill-name">Content Strategy</div>
+      <div class="progress-bar-bg">
+        <div id="contentStrategy" class="progress-bar-fill" style="width: 85%;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section id="portfolio">
+    <h2>My Projects</h2>
+    <div class="project">
+      <div class="project-title">Mission Hilsa</div>
+      <div class="project-desc">A specialized fish-selling Facebook page focusing on premium Hilsa varieties, with targeted ads and e-commerce integration.</div>
+      <a href="https://facebook.com/missionhilsa" target="_blank" class="project-link">View Project</a>
+    </div>
+    <div class="project">
+      <div class="project-title">Bengalbyte Booster</div>
+      <div class="project-desc">Digital marketing agency brand with services in SEO, Facebook Ads, and content strategy, helping clients grow online visibility and sales.</div>
+      <a href="https://bengalbytebooster.com" target="_blank" class="project-link">View Project</a>
+    </div>
+  </section>
+
+  <!-- Blog Section -->
+  <section id="blog">
+    <h2>Latest Blog Posts</h2>
+    <article class="blog-post">
+      <h3 class="post-title">5 Tips to Boost Your Facebook Ads ROI</h3>
+      <p class="post-excerpt">Learn how to optimize your Facebook advertising campaigns to maximize return on investment by targeting, budgeting, and creative strategies...</p>
+      <a href="#" class="read-more">Read More</a>
+    </article>
+    <article class="blog-post">
+      <h3 class="post-title">Understanding SEO Basics for Small Businesses</h3>
+      <p class="post-excerpt">SEO can seem complicated, but these simple steps will help your small business improve online visibility and attract more customers...</p>
+      <a href="#" class="read-more">Read More</a>
+    </article>
+    <article class="blog-post">
+      <h3 class="post-title">Creating Effective Content Strategies in 2025</h3>
+      <p class="post-excerpt">Content marketing is evolving fast. Discover the latest trends and how to create content that drives engagement and conversions this year...</p>
+      <a href="#" class="read-more">Read More</a>
+    </article>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <form onsubmit="event.preventDefault(); alert('Thank you for your message! I will get back to you soon.'); this.reset();">
+      <label for="name">Name</label>
+      <input id="name" type="text" required />
+      <label for="email">Email</label>
+      <input id="email" type="email" required />
+      <label for="message">Message</label>
+      <textarea id="message" rows="5" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <div class="socials">
+    <a href="https://facebook.com/fahimgunsur" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i> Facebook</a>
+    <a href="https://instagram.com/fahimgunsur" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> Instagram</a>
+  </div>
+  <p>&copy; 2025 Fahim Hasan</p>
+</footer>
+
+<!-- WhatsApp floating button -->
+<a href="https://wa.me/8801603093008" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">💬</a>
+
+<script>
+  // Navigation and section toggle logic
+  const navLinks = document.querySelectorAll('nav ul li a');
+  const sections = document.querySelectorAll('main section');
+  const hamburger = document.getElementById('hamburger');
+  const navUl = document.getElementById('nav-links');
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      navLinks.forEach(l => l.classList.remove('active'));
+      sections.forEach(sec => sec.classList.remove('active'));
+      link.classList.add('active');
+      const target = link.getAttribute('data-target');
+      document.getElementById(target).classList.add('active');
+
+      // Close mobile menu on click
+      if (window.innerWidth <= 768) {
+        navUl.classList.remove('show');
+        hamburger.classList.remove('active');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navUl.classList.toggle('show');
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      navUl.classList.remove('show');
+      hamburger.classList.remove('active');
+    }
+  });
+</script>
+</body>
+</html>
